@@ -1,19 +1,15 @@
-name: Workflow
-on: 
-    push:
-        branches: [ "main" ]
+name: issue-workflow
+on:
+  issues:
+    types: [opened]
+	
 jobs:
-  SSH:
+  issue-job:
     runs-on: ubuntu-latest
-
     steps:
-        - uses: actions/checkout@v3
-        - name: Run scripts in server
-          uses: appleboy/ssh-action@master
-          with:
-            key: ${{ secrets.SSH_KEY }}
-            host: ${{ secrets.HOST }}
-            username: ${{ secrets.USER }}
-            script: |
-                cd ${{ vars.project_path }}/${{ github.event.repository.name }}
-                git pull origin main
+    - name: step1
+      run: echo Hello, this is step1
+    - name: step2
+      run: |
+        echo Hello, this is step2
+        echo github actions
