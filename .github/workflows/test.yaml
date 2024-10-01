@@ -1,15 +1,33 @@
-name: issue-workflow
+name: workflow_dispatch
 on:
-  issues:
-    types: [opened]
-
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'set name'
+        required: true  # 필수 여부
+        default: 'github-actions'  # 기본값
+        type: string  # 데이터 타입
+      environment:
+        description: 'set env'
+        required: true
+        default: 'dev'
+        type: choice  # choice 타입 선택 시, options 속성도 부여해야 한다.
+        options:
+          - dev
+          - prod
+          - qa
+          
 jobs:
-  issue-job:
+  workflow-dispatch-job:
     runs-on: ubuntu-latest
     steps:
-    - name: step1
-      run: echo Hello, this is step1
-    - name: step2
-      run: |
-        echo Hello, this is step2
-        echo github actions
+      - name: step1 echo hello world
+        run: echo Hello, World
+      - name: step2 echo github action
+        run: |
+          echo Hello, world
+          echo github action
+      - name: echo inputs
+        run: | 
+          echo "NAME: ${{ inputs.name }}"
+          echo "ENVIRONMENT: ${{ inputs.environment }}"
